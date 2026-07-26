@@ -1,7 +1,8 @@
-import { ArrowDownRight, ArrowUpRight, Code2, Github, Layers3, Sparkles } from "lucide-react";
+import { ArrowUpRight, Code2, Layers3, Sparkles } from "lucide-react";
 import { profile, projects } from "@/content/site";
 import { Reveal } from "@/components/reveal";
 import { SiteHeader } from "@/components/site-header";
+import { VoxelHero } from "@/components/voxel-hero";
 
 const principles = [
   ["01", "Useful before novel", "Start with a problem worth caring about."],
@@ -17,19 +18,7 @@ export default function Home() {
       <div className="noise" />
       <SiteHeader />
 
-      <section className="relative mx-auto flex min-h-[90svh] max-w-[1600px] flex-col justify-end px-6 pb-10 pt-32 md:min-h-screen md:px-10 md:pb-12">
-        <div className="absolute right-[5%] top-[16%] size-[32rem] rounded-full bg-lime/[.07] blur-[130px]" />
-        <Reveal className="relative">
-          <div className="mb-8 flex items-center gap-3"><span className="lime-dot" /><p className="eyebrow">Portfolio / 2026</p></div>
-          <h1 className="max-w-6xl text-[14vw] font-medium leading-[.82] tracking-[-.09em] sm:text-[11vw] md:text-[8vw]">
-            Software with<br />a little more <span className="italic text-lime">soul.</span>
-          </h1>
-        </Reveal>
-        <Reveal delay={0.12} className="relative mt-12 grid gap-8 border-t border-white/15 pt-5 md:mt-16 md:grid-cols-12 md:items-end">
-          <p className="max-w-md text-[15px] leading-relaxed text-[#b6b6b0] md:col-span-5">I&apos;m {profile.name}, an {profile.role.toLowerCase()} building thoughtful digital products and interactive experiences.</p>
-          <div className="md:col-span-4 md:col-start-9"><a href="#work" className="group flex items-center gap-3 font-mono text-[10px] uppercase tracking-[.13em] text-paper"><span className="grid size-10 place-items-center rounded-full border border-white/20 transition-all duration-300 group-hover:border-lime group-hover:bg-lime group-hover:text-ink"><ArrowDownRight size={16} /></span> See what I&apos;m building</a></div>
-        </Reveal>
-      </section>
+      <VoxelHero name={profile.name} role={profile.role} />
 
       <section id="work" className="relative mx-auto max-w-[1600px] px-6 py-28 md:px-10 md:py-40">
         <Reveal className="grid gap-8 border-b border-white/15 pb-6 md:grid-cols-12 md:items-end"><div className="md:col-span-7"><p className="eyebrow mb-4">Selected work</p><h2 className="max-w-xl text-4xl leading-[.93] tracking-[-.065em] md:text-6xl">A small collection, built with intent.</h2></div><p className="max-w-xs text-sm leading-relaxed text-[#9c9c96] md:col-span-3 md:col-start-10">Each project here will include a live demo, the engineering story, and the decisions behind it.</p></Reveal>
