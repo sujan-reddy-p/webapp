@@ -7,5 +7,9 @@ export const metadata: Metadata = {
 };
 
 export default function ExplorePage() {
-  return <PortfolioExperience />;
+  return (
+    <div className="relative">
+      <PortfolioExperience />
+    </div>
+  );
 }

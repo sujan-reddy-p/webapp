@@ -8,27 +8,31 @@ export function RecruiterCta() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="recruiter-cta relative overflow-hidden border-y px-6 py-10 sm:px-9 sm:py-12">
-      <div className="pointer-events-none absolute -right-12 -top-24 size-72 rounded-full bg-[var(--accent)] opacity-10 blur-3xl" />
-      <div className="relative flex flex-col justify-between gap-9 lg:flex-row lg:items-end">
-        <div>
-          <p className="section-kicker">A useful next step</p>
-          <h2 className="mt-4 max-w-2xl text-3xl leading-[1.02] tracking-[-.055em] sm:text-5xl">Could I be useful to your team?</h2>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--muted)]">One click will eventually open a short, low-friction way to reach me about a role. The contact details will be connected when you provide them.</p>
+    <section className="recruiter-cta relative overflow-hidden border px-6 py-9 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+      <div className="pointer-events-none absolute -right-16 -top-28 size-80 rounded-full bg-[var(--accent)] opacity-15 blur-3xl" />
+      <div className="cta-layout relative">
+        <div className="cta-copy">
+          <p className="section-kicker">Let&apos;s make something useful</p>
+          <h2 className="mt-5 max-w-3xl text-4xl leading-[.92] tracking-[-.065em] sm:text-5xl lg:text-6xl">Could I be of help to your team?</h2>
+          <p className="body-copy mt-6 text-base">I&apos;m looking for a team where care for the product and care for the implementation go together. If that sounds familiar, I&apos;d love to talk.</p>
         </div>
-        <button type="button" onClick={() => setOpen(!open)} data-cursor="OPEN" className="primary-action group inline-flex min-h-12 shrink-0 items-center justify-between gap-8 self-start rounded-full px-5 text-sm font-medium lg:self-auto">
-          Start a conversation
-          <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:rotate-45" />
-        </button>
+        <div className="cta-action-panel">
+          <p className="cta-status"><span /> Open to a conversation</p>
+          <button type="button" onClick={() => setOpen(!open)} data-cursor="OPEN" className="cta-button group">
+            Start a conversation
+            <ArrowUpRight size={18} className="transition-transform duration-300 group-hover:rotate-45" />
+          </button>
+          <p className="cta-note">Email · LinkedIn · Calendar</p>
+        </div>
       </div>
 
       <AnimatePresence initial={false}>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-            <div className="mt-10 grid gap-5 border-t border-[var(--line)] pt-6 sm:grid-cols-3">
-              <Placeholder label="Email" value="[Add your email address]" />
-              <Placeholder label="Preferred channel" value="[Email / LinkedIn / phone]" />
-              <Placeholder label="Scheduling" value="[Add a calendar link]" />
+            <div className="mt-10 grid gap-5 border-t border-[var(--line)] pt-7 sm:grid-cols-3">
+              <Placeholder label="Email" value="sujanreddy.rp@gmail.com" href="mailto:sujanreddy.rp@gmail.com" />
+              <Placeholder label="LinkedIn" value="Connect with Sujan" href="https://www.linkedin.com/in/sujan-reddy-p/" />
+              <Placeholder label="Scheduling" value="Calendar link coming soon" />
               <button type="button" onClick={() => setOpen(false)} className="absolute right-5 top-5 grid size-8 place-items-center rounded-full border border-[var(--line)]" aria-label="Close contact details"><X size={13} /></button>
             </div>
           </motion.div>
@@ -38,6 +42,7 @@ export function RecruiterCta() {
   );
 }
 
-function Placeholder({ label, value }: { label: string; value: string }) {
-  return <div><p className="font-mono text-[9px] uppercase tracking-[.14em] text-[var(--faint)]">{label}</p><p className="mt-2 flex items-center gap-2 text-sm text-[var(--muted)]"><Mail size={13} className="text-[var(--accent)]" />{value}</p></div>;
+function Placeholder({ label, value, href }: { label: string; value: string; href?: string }) {
+  const content = <><Mail size={13} className="text-[var(--accent)]" />{value}</>;
+  return <div><p className="section-kicker">{label}</p>{href ? <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="mt-2 flex items-center gap-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--site-text)]">{content}</a> : <p className="mt-2 flex items-center gap-2 text-sm text-[var(--muted)]">{content}</p>}</div>;
 }

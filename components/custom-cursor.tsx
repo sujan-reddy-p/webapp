@@ -8,7 +8,7 @@ export function CustomCursor() {
   const labelRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const dot = dotRef.current;
     const ring = ringRef.current;
@@ -20,8 +20,7 @@ export function CustomCursor() {
     let ringX = -100;
     let ringY = -100;
     let frame = 0;
-
-    document.body.classList.add("cursor-enhanced");
+    let isMousePointer = false;
 
     const render = () => {
       ringX += (pointerX - ringX) * 0.18;
@@ -32,6 +31,11 @@ export function CustomCursor() {
     };
 
     const move = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      if (!isMousePointer) {
+        isMousePointer = true;
+        document.body.classList.add("cursor-enhanced");
+      }
       pointerX = event.clientX;
       pointerY = event.clientY;
       dot.dataset.visible = "true";
@@ -39,6 +43,7 @@ export function CustomCursor() {
     };
 
     const hover = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
       const target = (event.target as HTMLElement).closest<HTMLElement>("[data-cursor]");
       const text = target?.dataset.cursor ?? "";
       ring.dataset.active = target ? "true" : "false";
@@ -68,7 +73,9 @@ export function CustomCursor() {
   return (
     <>
       <div ref={dotRef} className="custom-cursor-dot" aria-hidden="true" />
-      <div ref={ringRef} className="custom-cursor-ring" aria-hidden="true"><span ref={labelRef} /></div>
+      <div ref={ringRef} className="custom-cursor-ring" aria-hidden="true">
+        <span ref={labelRef} />
+      </div>
     </>
   );
 }

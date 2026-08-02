@@ -31,11 +31,11 @@ export function AudienceGate() {
       <div className="relative mx-auto flex min-h-[calc(100svh-40px)] max-w-[1440px] flex-col border border-white/10 p-6 sm:min-h-[calc(100svh-64px)] sm:p-9 lg:p-12">
         <header className="flex items-center justify-between">
           <a href="/" className="text-sm font-medium tracking-[-.03em]">SUJAN<span className="text-white/35">.WORK</span></a>
-          <span className="font-mono text-[10px] uppercase tracking-[.16em] text-white/45">Choose your path</span>
+          <span className="font-mono text-[11px] uppercase tracking-[.12em] text-white/65">Choose your path</span>
         </header>
 
         <section className="my-auto py-16 sm:py-20 lg:py-24">
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="font-mono text-[10px] uppercase tracking-[.16em] text-[#f1c58f]">Welcome in</motion.p>
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="font-mono text-[11px] uppercase tracking-[.12em] text-[#f1c58f]">Welcome in</motion.p>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.05 }} className="mt-5 max-w-4xl text-5xl leading-[.92] tracking-[-.075em] sm:text-7xl lg:text-8xl">There’s more than one way to get to know my work.</motion.h1>
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.12 }} className="mt-7 max-w-xl text-base leading-relaxed text-white/62">Choose the version that is most useful to you. Both lead to the same person; they simply begin from a different place.</motion.p>
 
@@ -52,7 +52,7 @@ export function AudienceGate() {
                   className={`group relative min-h-[250px] overflow-hidden p-6 transition-transform duration-500 hover:-translate-y-1 sm:min-h-[290px] sm:p-8 ${path.className}`}
                 >
                   <div className="flex items-start justify-between">
-                    <span className={`font-mono text-[10px] uppercase tracking-[.15em] ${path.detailClassName}`}>{path.eyebrow}</span>
+                    <span className={`font-mono text-[11px] uppercase tracking-[.1em] ${path.detailClassName}`}>{path.eyebrow}</span>
                     <Icon size={19} strokeWidth={1.6} />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
@@ -70,7 +70,7 @@ export function AudienceGate() {
           </div>
         </section>
 
-        <footer className="flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[.14em] text-white/38">
+        <footer className="flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[.1em] text-white/60">
           <span>Early-career engineer / 2026</span>
           <span>Designed to be read, not decoded.</span>
         </footer>

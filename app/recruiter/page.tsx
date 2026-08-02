@@ -1,7 +1,25 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, BrainCircuit, Braces, Cloud, Code2, Database, GitBranch, Terminal } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, Check, CircleDot, Compass, ExternalLink, Github, MapPin, Sparkles, Trophy } from "lucide-react";
+import {
+  SiDocker,
+  SiFastapi,
+  SiFramer,
+  SiGit,
+  SiGithub,
+  SiNextdotjs,
+  SiPostgresql,
+  SiPytorch,
+  SiPython,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
+import { CompanionAgent } from "@/components/companion-agent";
 import { ProfileControls } from "@/components/profile-controls";
 import { RecruiterCta } from "@/components/recruiter-cta";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { profile } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -12,127 +30,329 @@ export const metadata: Metadata = {
 const projects = [
   {
     number: "01",
-    title: "[Flagship project title]",
-    purpose: "[One clear sentence describing the problem and who the project helps.]",
-    outcome: "[Add the most useful result, metric, or engineering achievement here.]",
-    role: "[Your role]",
-    year: "[Year]",
-    technologies: ["Next.js", "TypeScript", "API"],
-    visual: "project-visual-blue",
+    title: "Local Lore",
+    purpose: "A map-first San Francisco discovery experience that turns scattered local information into specific, memorable missions worth leaving the house for.",
+    outcome: "Designed and shipped a 112-mission V1 with an interactive 3D map, curated discovery prompts, and source-linked recommendations.",
+    year: "2026",
+    role: "Independent product build · San Francisco",
+    technologies: ["Next.js", "TypeScript", "MapLibre", "PMTiles"],
+    visual: "lore",
+    liveHref: "https://local-lore-five.vercel.app/",
+    codeHref: "https://github.com/sujan-reddy-p/local-lore",
   },
   {
     number: "02",
-    title: "[Second project title]",
-    purpose: "[Explain what makes this project useful, distinctive, or technically interesting.]",
-    outcome: "[Add an outcome, learning, performance improvement, or user impact.]",
-    role: "[Your role]",
-    year: "[Year]",
-    technologies: ["Python", "AI / ML", "Data"],
-    visual: "project-visual-orange",
+    title: "Health analysis platform",
+    purpose: "A predictive analytics platform for simultaneous multi-disease prediction from patient data, designed and built with Python, TensorFlow, and scikit-learn.",
+    outcome: "Improved prediction accuracy by 25% across a dataset of 10,000 patient records.",
+    year: "2023 — 2024",
+    role: "Software Engineer Assistantship · IBM",
+    technologies: ["Python", "TensorFlow", "scikit-learn"],
+    visual: "atlas",
+    codeHref: "https://github.com/sujan-reddy-p",
+  },
+  {
+    number: "03",
+    title: "Semantic Analyzer",
+    purpose: "An NLP-powered interface for detecting paraphrased plagiarism across local documents and material retrieved from web search.",
+    outcome: "Won 1st place at Hack-A-League, a national hackathon with 200+ participants.",
+    year: "2024",
+    role: "NLP project · Hack-A-League",
+    technologies: ["Python", "NLP", "Automation"],
+    visual: "signal",
+    codeHref: "https://github.com/sujan-reddy-p",
+  },
+];
+
+const achievements = [
+  {
+    place: "01",
+    title: "IBM Z Datathon",
+    detail: "1st place · Bangalore · international field of 3,000+ participants",
+    project: "Multi-level health analysis using medical-report data",
+    built: "A health-analysis concept built around medical-report data and multi-level analysis.",
+    signal: "Applied problem framing and data-focused product thinking in a large competitive field.",
+  },
+  {
+    place: "02",
+    title: "Hack-A-League",
+    detail: "1st place · national field of 200+ participants",
+    project: "Semantic Analyzer using NLP",
+    built: "An NLP-based semantic analyzer for interpreting and comparing language-based content.",
+    signal: "Demonstrates practical NLP application, clear problem selection, and competition delivery.",
+  },
+  {
+    place: "03",
+    title: "Hackerrupt ’22",
+    detail: "2nd place · national field of 300+ participants",
+    project: "Software Analyzer",
+    built: "A software-analysis project developed for a national engineering competition.",
+    signal: "Demonstrates analytical software development under an outcome-driven deadline.",
+  },
+  {
+    place: "04",
+    title: "Fantom Code",
+    detail: "3rd place · national field of 300+ participants",
+    project: "Inheritance of digital assets on blockchain",
+    built: "A blockchain concept addressing inheritance and ownership of digital assets.",
+    signal: "Demonstrates comfort exploring emerging technical domains and translating them into a product concept.",
   },
 ];
 
 const journey = [
-  { marker: "START", title: "[How your development journey began]", copy: "[A brief, honest origin point: what pulled you toward software and what you built first.]" },
-  { marker: "BUILD", title: "[Your first meaningful milestone]", copy: "[A project, internship, course, collaboration, or challenge that changed how you work.]" },
-  { marker: "NOW", title: "Building toward product engineering and applied AI", copy: "Developing a focused body of work that demonstrates useful ideas, sound engineering, and thoughtful interaction design." },
+  {
+    marker: "2020 — 2024",
+    title: "A foundation in computer science and community",
+    copy: "Completed a B.Tech. in Computer Science & Engineering at Global Academy of Technology, while leading the Linux GNU club and organizing development sessions for fellow students.",
+    location: "Bangalore, IN",
+    image: "/journey-discover.jpg",
+    alt: "A wall of colorful notes used to organize ideas",
+    credit: "Photo: Jo Szczepanska / Unsplash",
+  },
+  {
+    marker: "2021 — 2022",
+    title: "Learning what changes the product experience",
+    copy: "At DHI, built a responsive React and Google Maps experience that increased engagement by 20%, while performance work reduced page-load time by 30%.",
+    location: "Bangalore, IN",
+    image: "/journey-build.jpg",
+    alt: "A designer arranging notes during a product workshop",
+    credit: "Photo: Christian Brok / Unsplash",
+  },
+  {
+    marker: "2024 — 2026",
+    title: "Computer science graduate study at SUNY Buffalo",
+    copy: "Pursuing an MS in Computer Science while building a more focused body of work in product engineering and applied AI.",
+    location: "Buffalo, NY",
+    image: "/journey-now.jpg",
+    alt: "A laptop displaying program code on a desk",
+    credit: "Photo: Bernd Dittrich / Unsplash",
+  },
 ];
 
-const skills = [
-  { icon: Braces, title: "Frontend", detail: "[Add languages and frameworks]" },
-  { icon: Database, title: "Backend & data", detail: "[Add APIs, databases, and systems]" },
-  { icon: BrainCircuit, title: "Applied AI", detail: "[Add models, tools, and techniques]" },
-  { icon: Cloud, title: "Infrastructure", detail: "[Add cloud and deployment tools]" },
-  { icon: GitBranch, title: "Workflow", detail: "Git, collaboration, iteration" },
-  { icon: Terminal, title: "Currently learning", detail: "[Add your current focus]" },
-];
-
-const terminalNotes = [
-  ["$ npm run build", "left-[4%] top-[11%]"],
-  ["git commit -m 'keep going'", "right-[4%] top-[29%]"],
-  ["const idea = await build();", "left-[7%] top-[55%]"],
-  ["~/projects/next", "right-[8%] top-[74%]"],
+const tools: Array<{ name: string; note: string; icon: IconType; color: string }> = [
+  { name: "TypeScript", note: "Language", icon: SiTypescript, color: "#4285f4" },
+  { name: "React", note: "Interfaces", icon: SiReact, color: "#54c7ec" },
+  { name: "Next.js", note: "Products", icon: SiNextdotjs, color: "currentColor" },
+  { name: "Python", note: "Systems & AI", icon: SiPython, color: "#fbbc04" },
+  { name: "FastAPI", note: "APIs", icon: SiFastapi, color: "#34a853" },
+  { name: "PostgreSQL", note: "SQL & data", icon: SiPostgresql, color: "#5f8fc9" },
+  { name: "Docker", note: "Containers", icon: SiDocker, color: "#2496ed" },
+  { name: "Git", note: "Workflow", icon: SiGit, color: "#f05d3c" },
+  { name: "GitHub", note: "Collaboration", icon: SiGithub, color: "currentColor" },
+  { name: "Tailwind", note: "UI systems", icon: SiTailwindcss, color: "#38bdf8" },
+  { name: "Motion", note: "Interaction", icon: SiFramer, color: "#ff6f61" },
+  { name: "PyTorch", note: "Applied AI", icon: SiPytorch, color: "#ee4c2c" },
 ];
 
 export default function RecruiterPage() {
   return (
-    <main className="recruiter-shell relative min-h-svh overflow-hidden bg-[var(--site-bg)] text-[var(--site-text)]">
+    <main id="top" className="recruiter-shell relative min-h-svh overflow-hidden bg-[var(--site-bg)] text-[var(--site-text)]">
+      <nav className="fixed left-4 top-4 z-[70] flex items-center gap-7 sm:left-7 sm:top-6" aria-label="Portfolio sections">
+        <a href="#top" className="text-lg font-semibold tracking-[-.05em]">SUJAN<span className="text-[var(--accent)]">.</span></a>
+        <div className="hidden items-center gap-5 font-mono text-[13px] uppercase tracking-[.08em] text-[var(--muted)] md:flex">
+          <a href="#projects" className="transition-colors hover:text-[var(--site-text)]">Work</a>
+          <a href="#journey" className="transition-colors hover:text-[var(--site-text)]">Journey</a>
+          <a href="#tools" className="transition-colors hover:text-[var(--site-text)]">Stack</a>
+        </div>
+      </nav>
+      <ThemeToggle />
       <ProfileControls current="recruiter" />
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        {terminalNotes.map(([note, position]) => <span key={note} className={`terminal-whisper absolute ${position}`}>{note}</span>)}
-      </div>
+      <CompanionAgent />
 
-      <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-28 md:px-10 md:pb-24 md:pt-36">
-        <section className="grid min-h-[67svh] content-center gap-12 border-b border-[var(--line)] pb-20 md:grid-cols-12 md:gap-8 md:pb-28">
-          <div className="md:col-span-8">
-            <p className="section-kicker">Recruiter brief / early-career software engineer</p>
-            <h1 className="mt-7 max-w-4xl text-5xl leading-[.92] tracking-[-.078em] sm:text-7xl md:text-[5.6rem]">Hi, I’m {profile.name}. I build software that is useful, understandable, and considered.</h1>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--muted)] md:text-xl">I’m interested in product engineering and applied AI—especially work where the quality of the experience matters as much as the implementation behind it.</p>
+      <div className="relative mx-auto max-w-[1320px] px-6 pb-16 pt-28 md:px-10 md:pb-24 md:pt-36">
+        <section data-companion-zone="hero" className="sr-hero sr-project-hero grid min-h-[76svh] items-center gap-12 border-b border-[var(--line)] py-10 md:min-h-[78svh] md:grid-cols-12 md:gap-8">
+          <div className="relative z-10 md:col-span-6">
+            <h1 className="sr-hero-title max-w-3xl text-5xl leading-[.92] tracking-[-.075em] sm:text-6xl md:text-[5.7rem] lg:text-[6.5rem]">Hi, I&apos;m {profile.name}.<br />I build useful software and <em>thoughtful AI systems.</em></h1>
           </div>
-
-          <aside className="relative self-end md:col-span-3 md:col-start-10">
-            <div className="tiny-builder" aria-hidden="true">
-              <div className="tiny-builder-antenna" />
-              <div className="tiny-builder-head"><span /><span /></div>
-              <div className="tiny-builder-body"><Code2 size={18} /></div>
-              <div className="tiny-builder-shadow" />
-            </div>
-            <div className="mt-6 border-t border-[var(--line)] pt-5">
-              <p className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[.15em]"><span className="status-pulse size-2 rounded-full bg-[var(--accent)]" /> Open to early-career opportunities</p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">[Add preferred roles, location, work authorization, and availability.]</p>
-            </div>
-          </aside>
+          <div className="hero-lore-stage relative md:col-span-6">
+            <a
+              href="https://local-lore-five.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="OPEN"
+              className="hero-project-preview"
+              aria-label="Open Local Lore in a new tab"
+            >
+              <iframe title="Local Lore live project preview" src="https://local-lore-five.vercel.app/" tabIndex={-1} />
+              <span className="sr-only">Open Local Lore in a new tab</span>
+            </a>
+          </div>
         </section>
 
-        <section className="py-20 md:py-28">
-          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-            <div><p className="section-kicker">Featured projects</p><h2 className="mt-4 text-4xl tracking-[-.065em] sm:text-5xl">Proof before promises.</h2></div>
-            <p className="max-w-sm text-sm leading-relaxed text-[var(--muted)]">A small selection of work, explained through the problem, the decisions, and the outcome.</p>
+        <section id="projects" data-companion-zone="projects" className="py-24 md:py-28">
+          <div className="border-b border-[var(--line)] pb-8 md:pb-10">
+            <h2 className="max-w-none text-5xl leading-[.9] tracking-[-.075em] sm:text-6xl md:text-[5.6rem]">Featured projects.</h2>
           </div>
 
-          <div className="mt-12 space-y-5">
-            {projects.map((project) => (
-              <article key={project.number} data-cursor="SOON" className="project-card group grid overflow-hidden border border-[var(--line)] bg-[var(--panel)] md:grid-cols-12">
-                <div className={`relative min-h-[280px] overflow-hidden border-b border-[var(--line)] md:col-span-6 md:min-h-[410px] md:border-b-0 md:border-r ${project.visual}`}>
-                  <div className="project-terminal absolute inset-6 flex flex-col rounded-xl border p-4 shadow-2xl transition-transform duration-700 group-hover:-translate-y-2 group-hover:rotate-[-1deg] md:inset-10">
-                    <div className="flex gap-1.5"><span /><span /><span /></div>
-                    <div className="mt-8 space-y-3 font-mono text-[10px] opacity-70"><p><b>01</b> import &#123; idea &#125; from &quot;curiosity&quot;;</p><p><b>02</b> const problem = <i>&quot;[real problem]&quot;</i>;</p><p><b>03</b> const result = await build(problem);</p><p><b>04</b> ship(result);</p></div>
-                    <div className="mt-auto flex items-end justify-between"><span className="font-mono text-[9px] uppercase tracking-[.12em] opacity-50">Project preview / replace later</span><ArrowUpRight size={17} /></div>
-                  </div>
+          <div className="mt-14 space-y-20 md:mt-16 md:space-y-24">
+            {projects.map((project, index) => (
+              <article id={`project-${project.number}`} key={project.number} className={`project-story grid items-center gap-8 md:grid-cols-12 md:gap-10 ${index % 2 ? "project-story-reverse" : ""}`}>
+                <div className={`project-showcase project-showcase-${project.visual} relative min-h-[320px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[420px]`}>
+                  <ProjectVisual type={project.visual} />
+                  <span className="project-number">{project.number}</span>
                 </div>
-                <div className="flex min-h-[360px] flex-col p-6 sm:p-8 md:col-span-6 md:p-10">
-                  <div className="flex items-start justify-between"><span className="section-kicker">Project {project.number}</span><span className="font-mono text-[9px] text-[var(--faint)]">{project.year}</span></div>
-                  <div className="my-auto py-12"><h3 className="text-3xl tracking-[-.055em] sm:text-4xl">{project.title}</h3><p className="mt-4 max-w-md text-base leading-relaxed text-[var(--muted)]">{project.purpose}</p><p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--faint)]">{project.outcome}</p></div>
-                  <div className="flex flex-wrap items-center justify-between gap-5 border-t border-[var(--line)] pt-5"><div className="flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="tech-pill">{technology}</span>)}</div><span className="font-mono text-[9px] uppercase tracking-[.12em] text-[var(--faint)]">{project.role}</span></div>
+                <div className="project-copy md:col-span-5 md:col-start-8">
+                  <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
+                    <span className="section-kicker">Project / {project.number}</span>
+                    <span className="font-mono text-[11px] text-[var(--muted)]">{project.year}</span>
+                  </div>
+                  <h3 className="mt-8 text-3xl leading-[1] tracking-[-.055em] sm:text-4xl">{project.title}</h3>
+                  <p className="body-copy mt-5 text-[var(--site-text)]">{project.purpose}</p>
+                  <p className="mt-5 max-w-md border-l-2 border-[var(--accent)] pl-4 text-sm leading-relaxed text-[var(--muted)]">{project.outcome}</p>
+                  <div className="mt-7 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="tech-pill">{technology}</span>)}</div>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    {project.liveHref ? <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" className="project-action project-action-primary">View live project <ExternalLink size={14} /></a> : <a href={`#project-${project.number}`} aria-label={`${project.title} case study coming soon`} data-cursor="SOON" className="project-action project-action-primary">Case study <ArrowUpRight size={14} /></a>}
+                    <a href={project.codeHref} target="_blank" rel="noreferrer" data-cursor="CODE" className="project-action">Source <Github size={14} /></a>
+                  </div>
+                  <p className="mt-6 font-mono text-[11px] uppercase tracking-[.1em] text-[var(--muted)]">{project.role}</p>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <RecruiterCta />
-
-        <section className="py-20 md:py-28">
-          <div className="grid gap-12 md:grid-cols-12">
-            <div className="md:col-span-3"><p className="section-kicker">The journey</p><h2 className="mt-4 text-3xl tracking-[-.055em]">How I got here.</h2></div>
-            <div className="journey-line relative md:col-span-8 md:col-start-5">
-              {journey.map((item, index) => <article key={item.marker} className="journey-item relative grid gap-4 border-t border-[var(--line)] py-8 sm:grid-cols-[100px_1fr]"><div><span className="journey-dot" /><p className="font-mono text-[9px] tracking-[.16em] text-[var(--accent)]">{item.marker}</p></div><div><h3 className="text-2xl tracking-[-.045em]">{item.title}</h3><p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--muted)]">{item.copy}</p>{index < 2 && <p className="mt-5 font-mono text-[9px] uppercase tracking-[.13em] text-[var(--faint)]">[Add date, place, and supporting artifact]</p>}</div></article>)}
+        <section className="achievements-section py-24 md:py-28">
+          <div className="grid gap-10 md:grid-cols-12 md:items-start">
+            <div className="md:col-span-4">
+              <p className="section-kicker">Notable recognition</p>
+              <h2 className="section-title mt-4">Built under pressure.</h2>
+              <p className="section-lead mt-5 text-sm">Four hackathon placements across applied AI, NLP, software analysis, and blockchain work.</p>
+            </div>
+            <div className="achievements-list md:col-span-7 md:col-start-6">
+              {achievements.map((achievement) => (
+                <article key={achievement.place} className="achievement-row" tabIndex={0}>
+                  <span className="achievement-number">{achievement.place}</span>
+                  <div>
+                    <h3><Trophy size={16} aria-hidden="true" /> {achievement.title}</h3>
+                    <p>{achievement.detail}</p>
+                    <small>{achievement.project}</small>
+                    <div className="achievement-detail">
+                      <div><span>Built</span><p>{achievement.built}</p></div>
+                      <div><span>Hiring signal</span><p>{achievement.signal}</p></div>
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="border-y border-[var(--line)] py-16 md:py-20">
-          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="section-kicker">Skills & technologies</p><h2 className="mt-4 text-4xl tracking-[-.06em]">The tools behind the work.</h2></div><p className="max-w-xs text-sm leading-relaxed text-[var(--muted)]">These remain placeholders until we map your actual experience accurately.</p></div>
-          <div className="mt-12 grid gap-px overflow-hidden border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 lg:grid-cols-3">
-            {skills.map(({ icon: Icon, title, detail }) => <div key={title} className="min-h-[180px] bg-[var(--panel)] p-6"><Icon size={19} strokeWidth={1.6} className="text-[var(--accent)]" /><h3 className="mt-10 text-lg tracking-[-.035em]">{title}</h3><p className="mt-2 text-sm text-[var(--muted)]">{detail}</p></div>)}
+        <RecruiterCta />
+
+        <section id="journey" data-companion-zone="journey" className="journey-section py-24 md:py-36">
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-3">
+              <p className="section-kicker">The journey</p>
+              <h2 className="section-title mt-4">A few turns in the road.</h2>
+              <p className="section-lead mt-5 text-sm">Hover over a chapter to reveal the artifact behind it.</p>
+            </div>
+            <div className="md:col-span-8 md:col-start-5">
+              {journey.map((item, index) => (
+                <article key={item.marker} className="journey-chapter group relative grid min-h-[210px] overflow-hidden border-t border-[var(--line)] py-8 sm:grid-cols-[110px_1fr]">
+                  <div className="relative z-10"><span className="journey-index">0{index + 1}</span><p className="mt-4 font-mono text-[11px] tracking-[.12em] text-[var(--accent)]">{item.marker}</p></div>
+                  <div className="relative z-10 max-w-xl pr-0 transition-transform duration-500 group-hover:-translate-x-3 sm:pr-40">
+                    <h3 className="text-2xl leading-tight tracking-[-.045em]">{item.title}</h3>
+                    <p className="body-copy mt-3 text-sm">{item.copy}</p>
+                    <p className="mt-5 font-mono text-[11px] uppercase tracking-[.1em] text-[var(--muted)]">{item.location}</p>
+                  </div>
+                  <figure className="journey-photo">
+                    <Image src={item.image} alt={item.alt} fill sizes="(max-width: 768px) 65vw, 340px" className="object-cover" />
+                    <figcaption>{item.credit}</figcaption>
+                  </figure>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <footer className="flex flex-col justify-between gap-7 py-12 sm:flex-row sm:items-end">
-          <div><p className="section-kicker">Details to add</p><p className="mt-3 max-w-lg text-sm leading-relaxed text-[var(--muted)]">[Email] · [LinkedIn] · [GitHub] · [Résumé] · [Location]</p></div>
-          <a href="https://github.com/sujan-reddy-p" target="_blank" rel="noreferrer" data-cursor="OPEN" className="secondary-action inline-flex items-center gap-3 self-start rounded-full border px-5 py-3 text-sm sm:self-auto">Current GitHub <ArrowUpRight size={15} /></a>
-        </footer>
+        <section id="tools" data-companion-zone="tools" className="tools-section border-y border-[var(--line)] py-20 md:py-28">
+          <div className="grid gap-10 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <p className="section-kicker">Tools behind the work</p>
+              <h2 className="section-title mt-4">Tools I work with.</h2>
+              <p className="section-lead mt-5 text-sm">A concise view of the technologies behind the work. Each one earns its place through real use, not keyword matching.</p>
+            </div>
+            <div className="tool-grid md:col-span-7 md:col-start-6">
+              {tools.map(({ name, note, icon: Icon, color }) => (
+                <div key={name} className="tool-mark" data-cursor={name.toUpperCase()}>
+                  <span className="tool-icon" aria-hidden="true"><Icon size={25} style={{ color }} /></span>
+                  <span className="tool-copy"><strong>{name}</strong><small>{note}</small></span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section data-companion-zone="contact" className="recruiter-footer grid gap-10 py-16 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-7">
+            <p className="section-kicker">The rest is a conversation</p>
+            <h2 className="section-title mt-4">Open to the right opportunity.</h2>
+            <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]"><a className="underline decoration-[var(--accent)] underline-offset-4" href="mailto:sujanreddy.rp@gmail.com">sujanreddy.rp@gmail.com</a> · <a className="underline decoration-[var(--accent)] underline-offset-4" href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer">LinkedIn</a> · Buffalo, NY</p>
+          </div>
+          <a href="https://github.com/sujan-reddy-p" target="_blank" rel="noreferrer" data-cursor="OPEN" className="secondary-action inline-flex items-center justify-between gap-8 rounded-full border px-5 py-3 text-sm md:col-span-3 md:col-start-10">Current GitHub <ArrowUpRight size={15} /></a>
+        </section>
       </div>
     </main>
+  );
+}
+
+function ProjectVisual({ type }: { type: string }) {
+  if (type === "lore") {
+    return <LocalLoreVisual variant="card" />;
+  }
+
+  if (type === "atlas") {
+    return (
+      <div className="atlas-ui" aria-hidden="true">
+        <div className="atlas-map">
+          <span className="atlas-road atlas-road-one" />
+          <span className="atlas-road atlas-road-two" />
+          <span className="atlas-pin"><CircleDot size={22} /></span>
+          <span className="atlas-dot atlas-dot-one" />
+          <span className="atlas-dot atlas-dot-two" />
+        </div>
+        <div className="atlas-panel">
+          <span className="section-kicker">Local signal</span>
+          <h4>Something worth finding.</h4>
+          <div className="atlas-list"><span /><span /><span /></div>
+          <div className="atlas-check"><Check size={13} /> Saved for later</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="signal-ui" aria-hidden="true">
+      <div className="signal-header"><span><Sparkles size={14} /> Thoughtful automation</span><i /></div>
+      <div className="signal-thread">
+        <span className="signal-node signal-node-one">Input</span>
+        <span className="signal-line signal-line-one" />
+        <span className="signal-node signal-node-two">Reason</span>
+        <span className="signal-line signal-line-two" />
+        <span className="signal-node signal-node-three">Useful output</span>
+      </div>
+      <div className="signal-response"><span /><span /><span /><small>Built for clarity, not novelty.</small></div>
+    </div>
+  );
+}
+
+function LocalLoreVisual({ variant }: { variant: "hero" | "card" }) {
+  return (
+    <div className={`lore-map-visual lore-map-visual-${variant}`} aria-hidden="true">
+      <div className="lore-map-water" />
+      <div className="lore-map-grid" />
+      <span className="lore-road lore-road-one" />
+      <span className="lore-road lore-road-two" />
+      <span className="lore-road lore-road-three" />
+      <span className="lore-shore" />
+      <div className="lore-building-cluster lore-building-cluster-one"><i /><i /><i /><i /></div>
+      <div className="lore-building-cluster lore-building-cluster-two"><i /><i /><i /></div>
+      <span className="lore-zone lore-zone-one"><Compass size={16} /></span>
+      <span className="lore-zone lore-zone-two"><MapPin size={16} /></span>
+      <span className="lore-zone lore-zone-three"><Sparkles size={15} /></span>
+      <div className="lore-map-brand"><span>l</span><div><strong>Local Lore</strong><small>San Francisco field guide</small></div></div>
+      <div className="lore-map-caption"><span>112 curated missions</span><strong>Where next?</strong><small>Sunset · Food ritual · Live music</small></div>
+      <div className="lore-map-note"><i /><span>Map-first discovery</span></div>
+    </div>
   );
 }
