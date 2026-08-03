@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight, Check, CircleDot, Compass, ExternalLink, Github, MapPin, Sparkles, Trophy } from "lucide-react";
+import { ArrowUpRight, Check, CircleDot, Compass, ExternalLink, Github, Linkedin, Mail, MapPin, Sparkles, Trophy } from "lucide-react";
 import {
   SiDocker,
   SiFastapi,
@@ -17,8 +17,7 @@ import {
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 import { CompanionAgent } from "@/components/companion-agent";
-import { ProfileControls } from "@/components/profile-controls";
-import { RecruiterCta } from "@/components/recruiter-cta";
+import { LocalLoreHeroCard } from "@/components/local-lore-hero-card";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { profile } from "@/content/site";
 
@@ -27,15 +26,26 @@ export const metadata: Metadata = {
   description: "A concise introduction to Sujan, an early-career software engineer.",
 };
 
-const projects = [
+const projects: Array<{
+  number: string;
+  title: string;
+  purpose: string;
+  outcome: string;
+  year: string;
+  role: string;
+  technologies: string[];
+  visual: string;
+  liveHref?: string;
+  codeHref: string;
+}> = [
   {
     number: "01",
     title: "Local Lore",
-    purpose: "A map-first San Francisco discovery experience that turns scattered local information into specific, memorable missions worth leaving the house for.",
-    outcome: "Designed and shipped a 112-mission V1 with an interactive 3D map, curated discovery prompts, and source-linked recommendations.",
+    purpose: "Built a source-linked San Francisco discovery platform with Next.js, TypeScript, MapLibre, and an agent-ready research pipeline.",
+    outcome: "Shipped 112 curated activities with traceable sources and a typed foundation for scheduled daily refreshes.",
     year: "2026",
-    role: "Independent product build · San Francisco",
-    technologies: ["Next.js", "TypeScript", "MapLibre", "PMTiles"],
+    role: "Agentic product system · San Francisco",
+    technologies: ["Next.js", "TypeScript", "MapLibre", "Agent pipeline"],
     visual: "lore",
     liveHref: "https://local-lore-five.vercel.app/",
     codeHref: "https://github.com/sujan-reddy-p/local-lore",
@@ -43,8 +53,8 @@ const projects = [
   {
     number: "02",
     title: "Health analysis platform",
-    purpose: "A predictive analytics platform for simultaneous multi-disease prediction from patient data, designed and built with Python, TensorFlow, and scikit-learn.",
-    outcome: "Improved prediction accuracy by 25% across a dataset of 10,000 patient records.",
+    purpose: "Built a multi-disease prediction platform using Python, TensorFlow, and scikit-learn to analyze patient data.",
+    outcome: "Improved prediction accuracy by 25% across 10,000 patient records.",
     year: "2023 — 2024",
     role: "Software Engineer Assistantship · IBM",
     technologies: ["Python", "TensorFlow", "scikit-learn"],
@@ -54,8 +64,8 @@ const projects = [
   {
     number: "03",
     title: "Semantic Analyzer",
-    purpose: "An NLP-powered interface for detecting paraphrased plagiarism across local documents and material retrieved from web search.",
-    outcome: "Won 1st place at Hack-A-League, a national hackathon with 200+ participants.",
+    purpose: "Built an NLP-powered plagiarism analyzer for finding paraphrased content across local documents and web results.",
+    outcome: "Won 1st place at Hack-A-League, competing with 200+ participants.",
     year: "2024",
     role: "NLP project · Hack-A-League",
     technologies: ["Python", "NLP", "Automation"],
@@ -122,7 +132,7 @@ const journey = [
     marker: "2024 — 2026",
     title: "Computer science graduate study at SUNY Buffalo",
     copy: "Pursuing an MS in Computer Science while building a more focused body of work in product engineering and applied AI.",
-    location: "Buffalo, NY",
+    location: "San Francisco, CA",
     image: "/journey-now.jpg",
     alt: "A laptop displaying program code on a desk",
     credit: "Photo: Bernd Dittrich / Unsplash",
@@ -156,55 +166,52 @@ export default function RecruiterPage() {
         </div>
       </nav>
       <ThemeToggle />
-      <ProfileControls current="recruiter" />
       <CompanionAgent />
 
       <div className="relative mx-auto max-w-[1320px] px-6 pb-16 pt-28 md:px-10 md:pb-24 md:pt-36">
         <section data-companion-zone="hero" className="sr-hero sr-project-hero grid min-h-[76svh] items-center gap-12 border-b border-[var(--line)] py-10 md:min-h-[78svh] md:grid-cols-12 md:gap-8">
           <div className="relative z-10 md:col-span-6">
-            <h1 className="sr-hero-title max-w-3xl text-5xl leading-[.92] tracking-[-.075em] sm:text-6xl md:text-[5.7rem] lg:text-[6.5rem]">Hi, I&apos;m {profile.name}.<br />I build useful software and <em>thoughtful AI systems.</em></h1>
+            <p className="hero-kicker">Agentic software engineer · Product-minded builder</p>
+            <h1 className="sr-hero-title max-w-3xl text-5xl leading-[.92] tracking-[-.075em] sm:text-6xl md:text-[5.7rem] lg:text-[6.5rem]">Hi, I&apos;m {profile.name}.<br />I build useful products with <em>agents behind the scenes.</em></h1>
           </div>
-          <div className="hero-lore-stage relative md:col-span-6">
-            <a
-              href="https://local-lore-five.vercel.app/"
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="OPEN"
-              className="hero-project-preview"
-              aria-label="Open Local Lore in a new tab"
-            >
-              <iframe title="Local Lore live project preview" src="https://local-lore-five.vercel.app/" tabIndex={-1} />
-              <span className="sr-only">Open Local Lore in a new tab</span>
-            </a>
-          </div>
+          <div className="md:col-span-6"><LocalLoreHeroCard /></div>
         </section>
 
         <section id="projects" data-companion-zone="projects" className="py-24 md:py-28">
           <div className="border-b border-[var(--line)] pb-8 md:pb-10">
-            <h2 className="max-w-none text-5xl leading-[.9] tracking-[-.075em] sm:text-6xl md:text-[5.6rem]">Featured projects.</h2>
+            <p className="section-kicker">Selected work</p>
+            <h2 className="mt-4 text-4xl leading-[.95] tracking-[-.065em] sm:text-5xl md:text-6xl">Selected projects.</h2>
           </div>
 
           <div className="mt-14 space-y-20 md:mt-16 md:space-y-24">
             {projects.map((project, index) => (
               <article id={`project-${project.number}`} key={project.number} className={`project-story grid items-center gap-8 md:grid-cols-12 md:gap-10 ${index % 2 ? "project-story-reverse" : ""}`}>
-                <div className={`project-showcase project-showcase-${project.visual} relative min-h-[320px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[420px]`}>
-                  <ProjectVisual type={project.visual} />
-                  <span className="project-number">{project.number}</span>
-                </div>
+                {project.liveHref ? (
+                  <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" aria-label={`Open ${project.title} live project`} className={`project-showcase project-showcase-${project.visual} project-showcase-link relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
+                    {project.visual === "lore" ? <iframe title="Local Lore project preview" src={project.liveHref} tabIndex={-1} className="project-live-preview" /> : <ProjectVisual type={project.visual} />}
+                    <span className="project-preview-invite">Open the live city guide <ArrowUpRight size={14} /></span>
+                    <span className="project-number">{project.number}</span>
+                  </a>
+                ) : (
+                  <div className={`project-showcase project-showcase-${project.visual} relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
+                    <ProjectVisual type={project.visual} />
+                    <span className="project-number">{project.number}</span>
+                  </div>
+                )}
                 <div className="project-copy md:col-span-5 md:col-start-8">
                   <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
                     <span className="section-kicker">Project / {project.number}</span>
                     <span className="font-mono text-[11px] text-[var(--muted)]">{project.year}</span>
                   </div>
-                  <h3 className="mt-8 text-3xl leading-[1] tracking-[-.055em] sm:text-4xl">{project.title}</h3>
-                  <p className="body-copy mt-5 text-[var(--site-text)]">{project.purpose}</p>
-                  <p className="mt-5 max-w-md border-l-2 border-[var(--accent)] pl-4 text-sm leading-relaxed text-[var(--muted)]">{project.outcome}</p>
-                  <div className="mt-7 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="tech-pill">{technology}</span>)}</div>
-                  <div className="mt-8 flex flex-wrap gap-3">
+                  <h3 className="mt-6 text-3xl leading-[1] tracking-[-.055em] sm:text-4xl">{project.title}</h3>
+                  <p className="body-copy mt-4 text-[var(--site-text)]">{project.purpose}</p>
+                  <p className="project-impact mt-4"><span>Impact</span>{project.outcome}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="tech-pill">{technology}</span>)}</div>
+                  <div className="mt-6 flex flex-wrap gap-3">
                     {project.liveHref ? <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" className="project-action project-action-primary">View live project <ExternalLink size={14} /></a> : <a href={`#project-${project.number}`} aria-label={`${project.title} case study coming soon`} data-cursor="SOON" className="project-action project-action-primary">Case study <ArrowUpRight size={14} /></a>}
                     <a href={project.codeHref} target="_blank" rel="noreferrer" data-cursor="CODE" className="project-action">Source <Github size={14} /></a>
                   </div>
-                  <p className="mt-6 font-mono text-[11px] uppercase tracking-[.1em] text-[var(--muted)]">{project.role}</p>
+                  <p className="mt-5 font-mono text-[10px] uppercase tracking-[.1em] text-[var(--muted)]">{project.role}</p>
                 </div>
               </article>
             ))}
@@ -237,8 +244,6 @@ export default function RecruiterPage() {
           </div>
         </section>
 
-        <RecruiterCta />
-
         <section id="journey" data-companion-zone="journey" className="journey-section py-24 md:py-36">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-3">
@@ -247,9 +252,9 @@ export default function RecruiterPage() {
               <p className="section-lead mt-5 text-sm">Hover over a chapter to reveal the artifact behind it.</p>
             </div>
             <div className="md:col-span-8 md:col-start-5">
-              {journey.map((item, index) => (
+              {[...journey].reverse().map((item, index) => (
                 <article key={item.marker} className="journey-chapter group relative grid min-h-[210px] overflow-hidden border-t border-[var(--line)] py-8 sm:grid-cols-[110px_1fr]">
-                  <div className="relative z-10"><span className="journey-index">0{index + 1}</span><p className="mt-4 font-mono text-[11px] tracking-[.12em] text-[var(--accent)]">{item.marker}</p></div>
+                  <div className="relative z-10"><span className="journey-index">0{journey.length - index}</span><p className="mt-4 font-mono text-[11px] tracking-[.12em] text-[var(--accent)]">{item.marker}</p></div>
                   <div className="relative z-10 max-w-xl pr-0 transition-transform duration-500 group-hover:-translate-x-3 sm:pr-40">
                     <h3 className="text-2xl leading-tight tracking-[-.045em]">{item.title}</h3>
                     <p className="body-copy mt-3 text-sm">{item.copy}</p>
@@ -283,13 +288,14 @@ export default function RecruiterPage() {
           </div>
         </section>
 
-        <section data-companion-zone="contact" className="recruiter-footer grid gap-10 py-16 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-7">
-            <p className="section-kicker">The rest is a conversation</p>
-            <h2 className="section-title mt-4">Open to the right opportunity.</h2>
-            <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]"><a className="underline decoration-[var(--accent)] underline-offset-4" href="mailto:sujanreddy.rp@gmail.com">sujanreddy.rp@gmail.com</a> · <a className="underline decoration-[var(--accent)] underline-offset-4" href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer">LinkedIn</a> · Buffalo, NY</p>
+        <section data-companion-zone="contact" className="recruiter-footer contact-stage py-24 md:py-32">
+          <p className="section-kicker">The rest is a conversation</p>
+          <h2 className="section-title mt-4">Open to the right opportunity.</h2>
+          <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">San Francisco, California · Available for early-career software engineering roles</p>
+          <div className="contact-stage-actions">
+            <a href="mailto:sujanreddy.rp@gmail.com" data-cursor="EMAIL"><Mail size={18} /><span><small>Best for a quick note</small>Email Sujan</span><ArrowUpRight size={18} /></a>
+            <a href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer" data-cursor="DM"><Linkedin size={18} /><span><small>Prefer a direct message</small>DM on LinkedIn</span><ArrowUpRight size={18} /></a>
           </div>
-          <a href="https://github.com/sujan-reddy-p" target="_blank" rel="noreferrer" data-cursor="OPEN" className="secondary-action inline-flex items-center justify-between gap-8 rounded-full border px-5 py-3 text-sm md:col-span-3 md:col-start-10">Current GitHub <ArrowUpRight size={15} /></a>
         </section>
       </div>
     </main>
