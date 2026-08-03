@@ -103,9 +103,24 @@ export function CompanionAgent() {
     };
   }, []);
 
+  useEffect(() => {
+    const previous = Number(window.localStorage.getItem("portfolio-agent-message-index"));
+    const candidates = agentMessages.map((_, index) => index).filter((index) => index !== previous);
+    const next = candidates[Math.floor(Math.random() * candidates.length)];
+    setAgentMessageIndex(next);
+    window.localStorage.setItem("portfolio-agent-message-index", String(next));
+  }, []);
+
   const showMessage = open || atPageEnd;
   const toggleAgent = () => {
-    if (!open) setAgentMessageIndex((current) => (current + 1) % agentMessages.length);
+    if (!open) {
+      setAgentMessageIndex((current) => {
+        const candidates = agentMessages.map((_, index) => index).filter((index) => index !== current);
+        const next = candidates[Math.floor(Math.random() * candidates.length)];
+        window.localStorage.setItem("portfolio-agent-message-index", String(next));
+        return next;
+      });
+    }
     setOpen((value) => !value);
   };
 
