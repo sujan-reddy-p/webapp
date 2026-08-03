@@ -1,9 +1,15 @@
 "use client";
 
 import { ArrowUpRight, Bot, Braces, ChevronRight, FileJson2, Filter, Map, RotateCcw, ScanSearch, ShieldCheck } from "lucide-react";
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const liveProject = "https://local-lore-five.vercel.app/";
+const heroNotes = [
+  "A favorite project: a city guide with a little more curiosity built in.",
+  "Your next adventure may be one source check away.",
+  "Let an agent pick your next San Francisco mission.",
+];
 
 const walkthrough = [
   { label: "Build", copy: "Next.js + TypeScript define typed source adapters and a safe ingestion boundary." },
@@ -16,6 +22,12 @@ const walkthrough = [
 export function LocalLoreHeroCard() {
   const [showSystem, setShowSystem] = useState(false);
   const [step, setStep] = useState(0);
+  const [heroNote, setHeroNote] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setHeroNote((current) => (current + 1) % heroNotes.length), 5200);
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <div className={`hero-lore-stage${showSystem ? " is-flipped" : ""}`}>
@@ -27,7 +39,7 @@ export function LocalLoreHeroCard() {
           </a>
           <button type="button" onClick={() => setShowSystem(true)} data-cursor="FLOW" className="hero-agent-callout" aria-label="Learn how the Local Lore agent keeps the guide current">
             <span className="hero-agent-beacon"><ScanSearch size={16} /></span>
-            <span><small>Agent-maintained guide</small>An agent reads the web each day to keep this city guide current.</span>
+            <span><small>Agent-maintained guide</small><AnimatePresence mode="wait"><motion.span key={heroNote} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: .28 }}>{heroNotes[heroNote]}</motion.span></AnimatePresence></span>
           </button>
         </div>
 

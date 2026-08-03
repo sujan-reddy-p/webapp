@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Bot, MessageCircle, Sparkles, X } from "lucide-react";
+import { Bot, Linkedin, Mail, MessageCircle, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const endNotes = [
@@ -15,11 +15,55 @@ const endNotes = [
   "Let’s see whether the fit is real.",
 ];
 
+const agentMessages = [
+  "The agent is out of tokens for today. It spent them thinking about your next move.",
+  "I checked the portfolio twice. The projects are still here. Good sign.",
+  "My tiny brain recommends scrolling back to Local Lore.",
+  "A recruiter, a map, and an agent walk into a portfolio...",
+  "No buzzwords were harmed in the making of this page.",
+  "I am currently optimizing for a very good first impression.",
+  "The best technical decision today might be sending the message.",
+  "I would explain the architecture, but the diagrams are doing fine.",
+  "Somewhere between curious and employable feels like a good place to be.",
+  "This agent has excellent taste in small interaction details.",
+  "The map is live. The rest is a conversation.",
+  "I found a source of truth. It says: build things people can use.",
+  "A clean interface is just a good idea with better spacing.",
+  "The system is calm. The hiring market is... being monitored.",
+  "If you like thoughtful products, we may already have something in common.",
+  "I have one job: make the next click feel worth it.",
+  "The pixels are behaving. That is usually a promising start.",
+  "There is a small agent behind the curtain. It brought documentation.",
+  "The portfolio has shipped. The coffee is still in development.",
+  "I am not saying this is destiny. I am saying the button works.",
+  "A useful product beats a very impressive landing page every time.",
+  "The map knows where to go next. I am still working on that.",
+  "This is the part where a good team says hello.",
+  "I support typed data, clear writing, and good snacks.",
+  "No infinite scroll here. Just a finite amount of good work.",
+  "My favorite feature is still the one that makes the product useful.",
+  "The agent is thinking... mostly about edge cases.",
+  "One thoughtful hire can change the shape of a team.",
+  "I have seen the source code. It has opinions and comments.",
+  "A small message can be the beginning of a very good project.",
+  "The interface is quiet. The systems underneath are not.",
+  "Good software should feel a little like finding a shortcut.",
+  "I am keeping an eye on the map and an eye on the opportunity.",
+  "The agent recommends curiosity with a side of TypeScript.",
+  "Every strong project starts with a question worth answering.",
+  "There is no chatbot here yet. There is, however, a very sincere button.",
+  "The next version will have more tokens and possibly better jokes.",
+  "Source-linked, outcome-minded, cautiously optimistic.",
+  "If this feels like your kind of work, that is useful data.",
+  "I will be here, quietly rooting for the next conversation.",
+];
+
 export function CompanionAgent() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [atPageEnd, setAtPageEnd] = useState(false);
   const [noteIndex, setNoteIndex] = useState(0);
+  const [agentMessageIndex, setAgentMessageIndex] = useState(-1);
   const wasAtPageEnd = useRef(false);
 
   useEffect(() => {
@@ -60,6 +104,10 @@ export function CompanionAgent() {
   }, []);
 
   const showMessage = open || atPageEnd;
+  const toggleAgent = () => {
+    if (!open) setAgentMessageIndex((current) => (current + 1) % agentMessages.length);
+    setOpen((value) => !value);
+  };
 
   return (
     <div className="companion">
@@ -73,8 +121,8 @@ export function CompanionAgent() {
           >
             {open && <button type="button" onClick={() => setOpen(false)} aria-label="Close agent preview"><X size={12} /></button>}
             <span className="section-kicker">{atPageEnd && !open ? "One last thing" : "Sujan’s agent"}</span>
-            <p>{atPageEnd && !open ? endNotes[noteIndex] : "Ask about my work, experience, or whether I could fit your team."}</p>
-            {!atPageEnd || open ? <span className="companion-coming"><Sparkles size={12} /> Conversation mode coming next</span> : <span className="companion-end-spark"><Sparkles size={12} /> Say hello</span>}
+            <p>{atPageEnd && !open ? endNotes[noteIndex] : agentMessages[agentMessageIndex] ?? agentMessages[0]}</p>
+            {atPageEnd && !open ? <div className="companion-end-actions"><a href="mailto:sujanreddy.rp@gmail.com"><Mail size={13} /><span>Email</span></a><a href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer"><Linkedin size={13} /><span>DM on LinkedIn</span></a></div> : <span className="companion-coming">Tokens on cooldown · check back tomorrow</span>}
           </motion.div>
         )}
       </AnimatePresence>
@@ -82,7 +130,7 @@ export function CompanionAgent() {
         <button
           ref={buttonRef}
           type="button"
-          onClick={() => setOpen((value) => !value)}
+          onClick={toggleAgent}
           data-cursor="ASK"
           aria-label="Speak to Sujan's portfolio agent"
           className="companion-button"
