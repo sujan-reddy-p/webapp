@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight, Check, CircleDot, Compass, ExternalLink, Github, Linkedin, Mail, MapPin, Sparkles, Trophy } from "lucide-react";
+import { Activity, ArrowUpRight, Check, CircleDot, Compass, Database, ExternalLink, Filter, Gauge, Github, Linkedin, Mail, MapPin, Network, ShieldCheck, Sparkles, Trophy } from "lucide-react";
 import {
   SiDocker,
   SiFastapi,
@@ -36,13 +36,14 @@ const projects: Array<{
   technologies: string[];
   visual: string;
   liveHref?: string;
+  caseHref?: string;
   codeHref: string;
 }> = [
   {
     number: "01",
     title: "Local Lore",
-    purpose: "Built a source-linked San Francisco discovery platform with Next.js, TypeScript, MapLibre, and an agent-ready research pipeline.",
-    outcome: "Shipped 112 curated activities with traceable sources and a typed foundation for scheduled daily refreshes.",
+    purpose: "Built a source-linked San Francisco discovery guide with an automated agent that researches new events and keeps local listings current.",
+    outcome: "The agent continuously checks approved sources, detects new events or discrepancies, and updates this niche city guide faster than a manual maintenance workflow.",
     year: "2026",
     role: "Agentic product system · San Francisco",
     technologies: ["Next.js", "TypeScript", "MapLibre", "Agent pipeline"],
@@ -52,6 +53,18 @@ const projects: Array<{
   },
   {
     number: "02",
+    title: "Convergence",
+    purpose: "Built a Python research and paper-trading system that finds specialist Polymarket wallets and scores agreement across markets.",
+    outcome: "Processed 463K Polymarket conditions and 5.4M+ historical trades with Python, Pandas, PyArrow, and SQLite; generated 96K wallet/category profiles and isolated 266 strict specialists.",
+    year: "2026",
+    role: "Research & data systems · Polymarket",
+    technologies: ["Python", "FastAPI", "Pandas", "Statistical scoring"],
+    visual: "convergence",
+    caseHref: "/convergence",
+    codeHref: "https://github.com/sujan-reddy-p/Convergence",
+  },
+  {
+    number: "03",
     title: "Health analysis platform",
     purpose: "Built a multi-disease prediction platform using Python, TensorFlow, and scikit-learn to analyze patient data.",
     outcome: "Improved prediction accuracy by 25% across 10,000 patient records.",
@@ -62,7 +75,7 @@ const projects: Array<{
     codeHref: "https://github.com/sujan-reddy-p",
   },
   {
-    number: "03",
+    number: "04",
     title: "Semantic Analyzer",
     purpose: "Built an NLP-powered plagiarism analyzer for finding paraphrased content across local documents and web results.",
     outcome: "Won 1st place at Hack-A-League, competing with 200+ participants.",
@@ -86,7 +99,7 @@ const achievements = [
   {
     place: "02",
     title: "Hack-A-League",
-    detail: "1st place · national field of 200+ participants",
+    detail: "1st place · national field of 3,000+ participants",
     project: "Semantic Analyzer using NLP",
     built: "An NLP-based semantic analyzer for interpreting and comparing language-based content.",
     signal: "Demonstrates practical NLP application, clear problem selection, and competition delivery.",
@@ -94,7 +107,7 @@ const achievements = [
   {
     place: "03",
     title: "Hackerrupt ’22",
-    detail: "2nd place · national field of 300+ participants",
+    detail: "2nd place · national field of 3,000+ participants",
     project: "Software Analyzer",
     built: "A software-analysis project developed for a national engineering competition.",
     signal: "Demonstrates analytical software development under an outcome-driven deadline.",
@@ -102,7 +115,7 @@ const achievements = [
   {
     place: "04",
     title: "Fantom Code",
-    detail: "3rd place · national field of 300+ participants",
+    detail: "3rd place · national field of 3,000+ participants",
     project: "Inheritance of digital assets on blockchain",
     built: "A blockchain concept addressing inheritance and ownership of digital assets.",
     signal: "Demonstrates comfort exploring emerging technical domains and translating them into a product concept.",
@@ -186,10 +199,10 @@ export default function RecruiterPage() {
           <div className="mt-14 space-y-20 md:mt-16 md:space-y-24">
             {projects.map((project, index) => (
               <article id={`project-${project.number}`} key={project.number} className={`project-story grid items-center gap-8 md:grid-cols-12 md:gap-10 ${index % 2 ? "project-story-reverse" : ""}`}>
-                {project.liveHref ? (
-                  <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" aria-label={`Open ${project.title} live project`} className={`project-showcase project-showcase-${project.visual} project-showcase-link relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
+                {project.liveHref || project.caseHref ? (
+                  <a href={project.liveHref ?? project.caseHref} target={project.liveHref ? "_blank" : undefined} rel={project.liveHref ? "noreferrer" : undefined} data-cursor="OPEN" aria-label={`Open ${project.title}${project.liveHref ? " live project" : " case study"}`} className={`project-showcase project-showcase-${project.visual} project-showcase-link relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
                     {project.visual === "lore" ? <iframe title="Local Lore project preview" src={project.liveHref} tabIndex={-1} className="project-live-preview" /> : <ProjectVisual type={project.visual} />}
-                    <span className="project-preview-invite">Open the live city guide <ArrowUpRight size={14} /></span>
+                    <span className="project-preview-invite">{project.liveHref ? "Open the live city guide" : "Explore the technical case study"} <ArrowUpRight size={14} /></span>
                     <span className="project-number">{project.number}</span>
                   </a>
                 ) : (
@@ -208,7 +221,7 @@ export default function RecruiterPage() {
                   <p className="project-impact mt-4"><span>Impact</span>{project.outcome}</p>
                   <div className="mt-5 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="tech-pill">{technology}</span>)}</div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    {project.liveHref ? <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" className="project-action project-action-primary">View live project <ExternalLink size={14} /></a> : <a href={`#project-${project.number}`} aria-label={`${project.title} case study coming soon`} data-cursor="SOON" className="project-action project-action-primary">Case study <ArrowUpRight size={14} /></a>}
+                    {project.liveHref ? <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" className="project-action project-action-primary">View live project <ExternalLink size={14} /></a> : !project.caseHref && <a href={`#project-${project.number}`} aria-label={`${project.title} case study coming soon`} data-cursor="SOON" className="project-action project-action-primary">Case study <ArrowUpRight size={14} /></a>}
                     <a href={project.codeHref} target="_blank" rel="noreferrer" data-cursor="CODE" className="project-action">Source <Github size={14} /></a>
                   </div>
                   <p className="mt-5 font-mono text-[10px] uppercase tracking-[.1em] text-[var(--muted)]">{project.role}</p>
@@ -234,8 +247,11 @@ export default function RecruiterPage() {
                     <p>{achievement.detail}</p>
                     <small>{achievement.project}</small>
                     <div className="achievement-detail">
-                      <div><span>Built</span><p>{achievement.built}</p></div>
-                      <div><span>Hiring signal</span><p>{achievement.signal}</p></div>
+                      <div className="achievement-detail-copy">
+                        <div><span>Built</span><p>{achievement.built}</p></div>
+                        <div><span>Hiring signal</span><p>{achievement.signal}</p></div>
+                      </div>
+                      <AchievementOutcome place={achievement.place} title={achievement.title} project={achievement.project} />
                     </div>
                   </div>
                 </article>
@@ -254,7 +270,7 @@ export default function RecruiterPage() {
             <div className="md:col-span-8 md:col-start-5">
               {[...journey].reverse().map((item, index) => (
                 <article key={item.marker} className="journey-chapter group relative grid min-h-[210px] overflow-hidden border-t border-[var(--line)] py-8 sm:grid-cols-[110px_1fr]">
-                  <div className="relative z-10"><span className="journey-index">0{journey.length - index}</span><p className="mt-4 font-mono text-[11px] tracking-[.12em] text-[var(--accent)]">{item.marker}</p></div>
+                  <div className="relative z-10"><span className="journey-index">0{index + 1}</span><p className="mt-4 font-mono text-[11px] tracking-[.12em] text-[var(--accent)]">{item.marker}</p></div>
                   <div className="relative z-10 max-w-xl pr-0 transition-transform duration-500 group-hover:-translate-x-3 sm:pr-40">
                     <h3 className="text-2xl leading-tight tracking-[-.045em]">{item.title}</h3>
                     <p className="body-copy mt-3 text-sm">{item.copy}</p>
@@ -302,42 +318,77 @@ export default function RecruiterPage() {
   );
 }
 
+function AchievementOutcome({ place, title, project }: { place: string; title: string; project: string }) {
+  const outcome = place === "01" ? "1st / 3,000+" : place === "02" ? "1st / 3,000+" : place === "03" ? "2nd / 3,000+" : "3rd / 3,000+";
+  const label = place === "01" ? "Health analysis" : place === "02" ? "Semantic NLP" : place === "03" ? "Software analysis" : "Blockchain concept";
+
+  return (
+    <div className={`achievement-outcome achievement-outcome-${place}`} aria-label={`${title}: ${outcome}`}>
+      <div className="achievement-outcome-core"><Trophy size={16} /><strong>{outcome}</strong><small>{label}</small></div>
+      <div className="achievement-outcome-project">{project}</div>
+    </div>
+  );
+}
+
 function ProjectVisual({ type }: { type: string }) {
   if (type === "lore") {
     return <LocalLoreVisual variant="card" />;
   }
 
   if (type === "atlas") {
+    return <HealthAnalysisFlow />;
+  }
+
+  if (type === "convergence") {
     return (
-      <div className="atlas-ui" aria-hidden="true">
-        <div className="atlas-map">
-          <span className="atlas-road atlas-road-one" />
-          <span className="atlas-road atlas-road-two" />
-          <span className="atlas-pin"><CircleDot size={22} /></span>
-          <span className="atlas-dot atlas-dot-one" />
-          <span className="atlas-dot atlas-dot-two" />
+      <div className="convergence-ui" aria-hidden="true">
+        <div className="convergence-header"><span><Network size={14} /> Validated research pipeline</span><i /></div>
+        <div className="convergence-pipeline">
+          <div className="convergence-track"><span className="convergence-packet" /></div>
+          <div className="convergence-stage convergence-stage-one"><span><Database size={15} /></span><strong>463K</strong><small>conditions</small></div>
+          <div className="convergence-stage convergence-stage-two"><span><Activity size={15} /></span><strong>9,989</strong><small>candidates</small></div>
+          <div className="convergence-stage convergence-stage-three"><span><Filter size={15} /></span><strong>7,230</strong><small>clean pool</small></div>
+          <div className="convergence-stage convergence-stage-four"><span><ShieldCheck size={15} /></span><strong>266</strong><small>specialists</small></div>
+          <div className="convergence-stage convergence-stage-five"><span><Network size={15} /></span><strong>same side</strong><small>convergence</small></div>
+          <div className="convergence-stage convergence-stage-six"><span><Gauge size={15} /></span><strong>67.4%</strong><small>837 clusters</small></div>
         </div>
-        <div className="atlas-panel">
-          <span className="section-kicker">Local signal</span>
-          <h4>Something worth finding.</h4>
-          <div className="atlas-list"><span /><span /><span /></div>
-          <div className="atlas-check"><Check size={13} /> Saved for later</div>
-        </div>
+        <div className="convergence-signal"><span>weighted signal</span><i /><strong>Independent specialists agree</strong><small>category skill · conviction · entry timing</small></div>
+        <div className="convergence-footer"><span>Python</span><span>FastAPI</span><span>statistical scoring</span></div>
       </div>
     );
   }
 
+  return <SemanticAnalyzerFlow />;
+}
+
+function HealthAnalysisFlow() {
   return (
-    <div className="signal-ui" aria-hidden="true">
-      <div className="signal-header"><span><Sparkles size={14} /> Thoughtful automation</span><i /></div>
-      <div className="signal-thread">
-        <span className="signal-node signal-node-one">Input</span>
-        <span className="signal-line signal-line-one" />
-        <span className="signal-node signal-node-two">Reason</span>
-        <span className="signal-line signal-line-two" />
-        <span className="signal-node signal-node-three">Useful output</span>
+    <div className="project-flow-ui project-flow-health" aria-hidden="true">
+      <div className="project-flow-header"><span><Activity size={13} /> Clinical inference pipeline</span><i /></div>
+      <div className="project-flow-track"><b /><b /></div>
+      <div className="project-flow-grid">
+        <div className="project-flow-node project-flow-node-one"><span><Database size={15} /></span><div><small>Input</small><strong>Patient records</strong></div></div>
+        <div className="project-flow-node project-flow-node-two"><span><Filter size={15} /></span><div><small>Process</small><strong>Feature prep</strong></div></div>
+        <div className="project-flow-node project-flow-node-three"><span><Gauge size={15} /></span><div><small>Model</small><strong>Risk inference</strong></div></div>
+        <div className="project-flow-node project-flow-node-four"><span><ShieldCheck size={15} /></span><div><small>Output</small><strong>Health profile</strong></div></div>
       </div>
-      <div className="signal-response"><span /><span /><span /><small>Built for clarity, not novelty.</small></div>
+      <div className="project-flow-result"><span>TensorFlow + scikit-learn</span><strong>Multi-disease analysis</strong><small>Structured features → prediction output</small></div>
+    </div>
+  );
+}
+
+function SemanticAnalyzerFlow() {
+  return (
+    <div className="project-flow-ui project-flow-semantic" aria-hidden="true">
+      <div className="project-flow-header"><span><Sparkles size={13} /> Semantic comparison pipeline</span><i /></div>
+      <div className="project-flow-track"><b /><b /></div>
+      <div className="project-flow-grid">
+        <div className="project-flow-node project-flow-node-one"><span><Database size={15} /></span><div><small>Input</small><strong>Documents</strong></div></div>
+        <div className="project-flow-node project-flow-node-two"><span><Filter size={15} /></span><div><small>Process</small><strong>Text chunks</strong></div></div>
+        <div className="project-flow-node project-flow-node-three"><span><Network size={15} /></span><div><small>Model</small><strong>Semantic match</strong></div></div>
+        <div className="project-flow-node project-flow-node-four"><span><ShieldCheck size={15} /></span><div><small>Output</small><strong>Evidence flags</strong></div></div>
+      </div>
+      <div className="project-flow-result"><span>NLP + automation</span><strong>Paraphrase detection</strong><small>Local files + web references → reviewable overlap</small></div>
     </div>
   );
 }
