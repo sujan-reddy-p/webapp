@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Activity, ArrowUpRight, Check, CircleDot, Compass, Database, ExternalLink, Filter, Gauge, Github, Linkedin, Mail, MapPin, Network, ShieldCheck, Sparkles, Trophy } from "lucide-react";
 import {
   SiDocker,
@@ -128,27 +127,18 @@ const journey = [
     title: "A foundation in computer science and community",
     copy: "Completed a B.Tech. in Computer Science & Engineering at Global Academy of Technology, while leading the Linux GNU club and organizing development sessions for fellow students.",
     location: "Bangalore, IN",
-    image: "/journey-discover.jpg",
-    alt: "A wall of colorful notes used to organize ideas",
-    credit: "Photo: Jo Szczepanska / Unsplash",
   },
   {
     marker: "2021 — 2022",
     title: "Learning what changes the product experience",
     copy: "At DHI, built a responsive React and Google Maps experience that increased engagement by 20%, while performance work reduced page-load time by 30%.",
     location: "Bangalore, IN",
-    image: "/journey-build.jpg",
-    alt: "A designer arranging notes during a product workshop",
-    credit: "Photo: Christian Brok / Unsplash",
   },
   {
     marker: "2024 — 2026",
     title: "Computer science graduate study at SUNY Buffalo",
     copy: "Pursuing an MS in Computer Science while building a more focused body of work in product engineering and applied AI.",
     location: "San Francisco, CA",
-    image: "/journey-now.jpg",
-    alt: "A laptop displaying program code on a desk",
-    credit: "Photo: Bernd Dittrich / Unsplash",
   },
 ];
 
@@ -198,7 +188,7 @@ export default function RecruiterPage() {
 
           <div className="mt-14 space-y-20 md:mt-16 md:space-y-24">
             {projects.map((project, index) => (
-              <article id={`project-${project.number}`} key={project.number} className={`project-story grid items-center gap-8 md:grid-cols-12 md:gap-10 ${index % 2 ? "project-story-reverse" : ""}`}>
+              <article id={`project-${project.number}`} data-companion-zone={project.number === "01" ? "local-lore" : undefined} key={project.number} className={`project-story grid items-center gap-8 md:grid-cols-12 md:gap-10 ${index % 2 ? "project-story-reverse" : ""}`}>
                 {project.liveHref || project.caseHref ? (
                   <a href={project.liveHref ?? project.caseHref} target={project.liveHref ? "_blank" : undefined} rel={project.liveHref ? "noreferrer" : undefined} data-cursor="OPEN" aria-label={`Open ${project.title}${project.liveHref ? " live project" : " case study"}`} className={`project-showcase project-showcase-${project.visual} project-showcase-link relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
                     {project.visual === "lore" ? <iframe title="Local Lore project preview" src={project.liveHref} tabIndex={-1} className="project-live-preview" /> : <ProjectVisual type={project.visual} />}
@@ -246,13 +236,6 @@ export default function RecruiterPage() {
                     <h3><Trophy size={16} aria-hidden="true" /> {achievement.title}</h3>
                     <p>{achievement.detail}</p>
                     <small>{achievement.project}</small>
-                    <div className="achievement-detail">
-                      <div className="achievement-detail-copy">
-                        <div><span>Built</span><p>{achievement.built}</p></div>
-                        <div><span>Hiring signal</span><p>{achievement.signal}</p></div>
-                      </div>
-                      <AchievementOutcome place={achievement.place} title={achievement.title} project={achievement.project} />
-                    </div>
                   </div>
                 </article>
               ))}
@@ -276,10 +259,6 @@ export default function RecruiterPage() {
                     <p className="body-copy mt-3 text-sm">{item.copy}</p>
                     <p className="mt-5 font-mono text-[11px] uppercase tracking-[.1em] text-[var(--muted)]">{item.location}</p>
                   </div>
-                  <figure className="journey-photo">
-                    <Image src={item.image} alt={item.alt} fill sizes="(max-width: 768px) 65vw, 340px" className="object-cover" />
-                    <figcaption>{item.credit}</figcaption>
-                  </figure>
                 </article>
               ))}
             </div>
@@ -315,18 +294,6 @@ export default function RecruiterPage() {
         </section>
       </div>
     </main>
-  );
-}
-
-function AchievementOutcome({ place, title, project }: { place: string; title: string; project: string }) {
-  const outcome = place === "01" ? "1st / 3,000+" : place === "02" ? "1st / 3,000+" : place === "03" ? "2nd / 3,000+" : "3rd / 3,000+";
-  const label = place === "01" ? "Health analysis" : place === "02" ? "Semantic NLP" : place === "03" ? "Software analysis" : "Blockchain concept";
-
-  return (
-    <div className={`achievement-outcome achievement-outcome-${place}`} aria-label={`${title}: ${outcome}`}>
-      <div className="achievement-outcome-core"><Trophy size={16} /><strong>{outcome}</strong><small>{label}</small></div>
-      <div className="achievement-outcome-project">{project}</div>
-    </div>
   );
 }
 

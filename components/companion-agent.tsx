@@ -58,13 +58,28 @@ const agentMessages = [
   "I will be here, quietly rooting for the next conversation.",
 ];
 
+const localLoreNotes = [
+  "Oh, this map has good instincts. I read the sources so you can spend your time choosing the adventure.",
+  "Tiny field note: Local Lore is not just pins on a map. It is a curious little agent keeping the city guide fresh.",
+  "I like this one. The map turns a normal afternoon into a small, source-backed San Francisco mission.",
+  "The agent found the places; the map gives them somewhere to meet. That feels like a useful partnership.",
+  "Look closely: every discovery starts as a page I read, then becomes a place you can actually go.",
+  "This is my favorite kind of automation—quietly doing the reading, leaving the fun part to you.",
+  "The map looks good because the details underneath it are doing their homework.",
+  "A little agent, a lot of local context, and one excellent excuse to leave the house.",
+];
+
 export function CompanionAgent() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [atPageEnd, setAtPageEnd] = useState(false);
   const [noteIndex, setNoteIndex] = useState(0);
   const [agentMessageIndex, setAgentMessageIndex] = useState(-1);
+  const [localLoreNoteIndex, setLocalLoreNoteIndex] = useState(0);
+  const [localLoreVisible, setLocalLoreVisible] = useState(false);
+  const [popupDismissed, setPopupDismissed] = useState(false);
   const wasAtPageEnd = useRef(false);
+  const wasLocalLoreVisible = useRef(false);
 
   useEffect(() => {
     const track = (event: PointerEvent) => {
@@ -82,6 +97,24 @@ export function CompanionAgent() {
 
     window.addEventListener("pointermove", track, { passive: true });
     return () => window.removeEventListener("pointermove", track);
+  }, []);
+
+  useEffect(() => {
+    const target = document.querySelector('[data-companion-zone="local-lore"]');
+    if (!target) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      const visible = entry.isIntersecting;
+      if (visible && !wasLocalLoreVisible.current) {
+        setLocalLoreNoteIndex((current) => {
+          const candidates = localLoreNotes.map((_, index) => index).filter((index) => index !== current);
+          return candidates[Math.floor(Math.random() * candidates.length)];
+        });
+      }
+      wasLocalLoreVisible.current = visible;
+      setLocalLoreVisible(visible);
+    }, { threshold: 0.32 });
+    observer.observe(target);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -111,9 +144,27 @@ export function CompanionAgent() {
     window.localStorage.setItem("portfolio-agent-message-index", String(next));
   }, []);
 
-  const showMessage = open || atPageEnd;
+  const showMessage = !popupDismissed && (open || atPageEnd || localLoreVisible);
+  const localLoreMode = localLoreVisible && !open && !atPageEnd;
+
+  useEffect(() => {
+    const hasTrigger = open || atPageEnd || localLoreVisible;
+    if (!hasTrigger) {
+      setPopupDismissed(false);
+      return;
+    }
+    if (popupDismissed) return;
+    setPopupDismissed(false);
+    const timer = window.setTimeout(() => {
+      setPopupDismissed(true);
+      setOpen(false);
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, [open, atPageEnd, localLoreVisible, popupDismissed]);
+
   const toggleAgent = () => {
     if (!open) {
+      setPopupDismissed(false);
       setAgentMessageIndex((current) => {
         const candidates = agentMessages.map((_, index) => index).filter((index) => index !== current);
         const next = candidates[Math.floor(Math.random() * candidates.length)];
@@ -132,12 +183,12 @@ export function CompanionAgent() {
             initial={{ opacity: 0, y: 12, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.97 }}
-            className={`companion-popover${atPageEnd && !open ? " companion-end-note" : ""}`}
+            className={`companion-popover${atPageEnd && !open ? " companion-end-note" : ""}${localLoreMode ? " companion-context-note" : ""}`}
           >
             {open && <button type="button" onClick={() => setOpen(false)} aria-label="Close agent preview"><X size={12} /></button>}
-            <span className="section-kicker">{atPageEnd && !open ? "One last thing" : "Sujan’s agent"}</span>
-            <p>{atPageEnd && !open ? endNotes[noteIndex] : agentMessages[agentMessageIndex] ?? agentMessages[0]}</p>
-            {atPageEnd && !open ? <div className="companion-end-actions"><a href="mailto:sujanreddy.rp@gmail.com"><Mail size={13} /><span>Email</span></a><a href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer"><Linkedin size={13} /><span>DM on LinkedIn</span></a></div> : <span className="companion-coming">Tokens on cooldown · check back tomorrow</span>}
+            <span className="section-kicker">{atPageEnd && !open ? "One last thing" : localLoreMode ? "Local Lore · field note" : "Sujan’s agent"}</span>
+            <p>{atPageEnd && !open ? endNotes[noteIndex] : localLoreMode ? localLoreNotes[localLoreNoteIndex] : agentMessages[agentMessageIndex] ?? agentMessages[0]}</p>
+            {atPageEnd && !open ? <div className="companion-end-actions"><a href="mailto:sujanreddy.rp@gmail.com"><Mail size={13} /><span>Email</span></a><a href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer"><Linkedin size={13} /><span>DM on LinkedIn</span></a></div> : localLoreMode ? <span className="companion-coming">Reading the map · checking the good bits</span> : null}
           </motion.div>
         )}
       </AnimatePresence>
