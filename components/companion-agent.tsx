@@ -80,6 +80,7 @@ export function CompanionAgent() {
   const [popupDismissed, setPopupDismissed] = useState(false);
   const wasAtPageEnd = useRef(false);
   const wasLocalLoreVisible = useRef(false);
+  const localLoreResizing = useRef(false);
 
   useEffect(() => {
     const track = (event: PointerEvent) => {
@@ -102,9 +103,9 @@ export function CompanionAgent() {
   useEffect(() => {
     const target = document.querySelector('[data-companion-zone="local-lore"]');
     if (!target) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      const visible = entry.isIntersecting;
-      if (visible && !wasLocalLoreVisible.current) {
+    let resizeTimer: number | undefined;
+    const setLocalLoreVisibility = (visible: boolean, announce: boolean) => {
+      if (visible && !wasLocalLoreVisible.current && announce) {
         setLocalLoreNoteIndex((current) => {
           const candidates = localLoreNotes.map((_, index) => index).filter((index) => index !== current);
           return candidates[Math.floor(Math.random() * candidates.length)];
@@ -112,9 +113,27 @@ export function CompanionAgent() {
       }
       wasLocalLoreVisible.current = visible;
       setLocalLoreVisible(visible);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      setLocalLoreVisibility(entry.isIntersecting, !localLoreResizing.current);
     }, { threshold: 0.32 });
     observer.observe(target);
-    return () => observer.disconnect();
+    const handleResize = () => {
+      localLoreResizing.current = true;
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        localLoreResizing.current = false;
+        const rect = target.getBoundingClientRect();
+        const visible = rect.top < window.innerHeight * 0.68 && rect.bottom > window.innerHeight * 0.32;
+        setLocalLoreVisibility(visible, false);
+      }, 180);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", handleResize);
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {

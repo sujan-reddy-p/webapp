@@ -53,8 +53,8 @@ const projects: Array<{
   {
     number: "02",
     title: "FedLens",
-    purpose: "Built an agentic federal spending analyst that turns natural-language questions into grounded answers from official U.S. government data.",
-    outcome: "Separated language-model reasoning from deterministic database retrieval so every answer includes reproducible figures, visual summaries, and source provenance.",
+    purpose: "Built an agentic government-spending analyst that aggregates fiscal-year data across departments, then connects official figures with agency publications and program context.",
+    outcome: "FedLens combines structured budget data with contextual government sources to explain nuanced questions simply, while keeping the retrieval, comparison, and provenance reproducible underneath.",
     year: "2026",
     role: "Agentic data product · public spending",
     technologies: ["Python", "FastAPI", "LangGraph", "PostgreSQL"],
@@ -192,10 +192,10 @@ export default function RecruiterPage() {
           <div className="mt-14 space-y-20 md:mt-16 md:space-y-24">
             {projects.map((project, index) => (
               <article id={`project-${project.number}`} data-companion-zone={project.number === "01" ? "local-lore" : undefined} key={project.number} className={`project-story grid items-center gap-8 md:grid-cols-12 md:gap-10 ${index % 2 ? "project-story-reverse" : ""}`}>
-                {project.liveHref || project.caseHref ? (
-                  <a href={project.liveHref ?? project.caseHref} target={project.liveHref ? "_blank" : undefined} rel={project.liveHref ? "noreferrer" : undefined} data-cursor="OPEN" aria-label={`Open ${project.title}${project.liveHref ? " live project" : " case study"}`} className={`project-showcase project-showcase-${project.visual} project-showcase-link relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
+                {project.liveHref || project.caseHref || project.visual === "fedlens" ? (
+                  <a href={project.liveHref ?? project.caseHref ?? project.codeHref} target={project.liveHref || project.visual === "fedlens" ? "_blank" : undefined} rel={project.liveHref || project.visual === "fedlens" ? "noreferrer" : undefined} data-cursor="OPEN" aria-label={`Open ${project.title}${project.liveHref ? " live project" : project.visual === "fedlens" ? " GitHub repository" : " case study"}`} className={`project-showcase project-showcase-${project.visual} project-showcase-link relative min-h-[260px] overflow-hidden rounded-[1.5rem] md:col-span-6 md:min-h-[320px]`}>
                     {project.visual === "lore" ? <iframe title="Local Lore project preview" src={project.liveHref} tabIndex={-1} className="project-live-preview" /> : <ProjectVisual type={project.visual} />}
-                    <span className="project-preview-invite">{project.liveHref ? "Open the live city guide" : "Explore the technical case study"} <ArrowUpRight size={14} /></span>
+                    <span className="project-preview-invite">{project.liveHref ? "Open the live city guide" : project.caseHref ? "Explore the technical case study" : "Open the GitHub repository"} <ArrowUpRight size={14} /></span>
                     <span className="project-number">{project.number}</span>
                   </a>
                 ) : (
@@ -214,7 +214,7 @@ export default function RecruiterPage() {
                   <p className="project-impact mt-4"><span>Impact</span>{project.outcome}</p>
                   <div className="mt-5 flex flex-wrap gap-2">{project.technologies.map((technology) => <span key={technology} className="tech-pill">{technology}</span>)}</div>
                   <div className="mt-6 flex flex-wrap gap-3">
-                    {project.liveHref ? <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" className="project-action project-action-primary">View live project <ExternalLink size={14} /></a> : !project.caseHref && <a href={`#project-${project.number}`} aria-label={`${project.title} case study coming soon`} data-cursor="SOON" className="project-action project-action-primary">Case study <ArrowUpRight size={14} /></a>}
+                    {project.liveHref ? <a href={project.liveHref} target="_blank" rel="noreferrer" data-cursor="OPEN" className="project-action project-action-primary">View live project <ExternalLink size={14} /></a> : !project.caseHref && project.visual !== "fedlens" && <a href={`#project-${project.number}`} aria-label={`${project.title} case study coming soon`} data-cursor="SOON" className="project-action project-action-primary">Case study <ArrowUpRight size={14} /></a>}
                     <a href={project.codeHref} target="_blank" rel="noreferrer" data-cursor="CODE" className="project-action">Source <Github size={14} /></a>
                   </div>
                   <p className="mt-5 font-mono text-[10px] uppercase tracking-[.1em] text-[var(--muted)]">{project.role}</p>
@@ -355,8 +355,8 @@ function FedLensVisual() {
   return (
     <div className="fedlens-ui" aria-hidden="true">
       <div className="fedlens-brand"><span className="fedlens-mark"><i /><b /></span><strong>fedlens</strong><small>public spending, in focus</small></div>
-      <div className="fedlens-query"><span>Ask about federal spending</span><strong>How much did NASA spend in FY2025?</strong><i><ArrowUpRight size={13} /></i></div>
-      <div className="fedlens-answer"><span><Check size={12} /> grounded answer</span><strong>$24.9B</strong><small>NASA · FY2025 obligations · USAspending.gov</small></div>
+      <div className="fedlens-query"><span>Ask a nuanced question</span><strong>Why did the Department of Defense budget rise 10×?</strong><i><ArrowUpRight size={13} /></i></div>
+      <div className="fedlens-answer"><span><Check size={12} /> grounded answer</span><strong>Context found</strong><small>budget series · agency publications · source trail</small></div>
       <div className="fedlens-footer"><span>LangGraph</span><span>FastAPI</span><span>Neon</span><i /></div>
     </div>
   );
