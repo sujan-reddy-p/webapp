@@ -52,6 +52,17 @@ const projects: Array<{
   },
   {
     number: "02",
+    title: "FedLens",
+    purpose: "Built an agentic federal spending analyst that turns natural-language questions into grounded answers from official U.S. government data.",
+    outcome: "Separated language-model reasoning from deterministic database retrieval so every answer includes reproducible figures, visual summaries, and source provenance.",
+    year: "2026",
+    role: "Agentic data product · public spending",
+    technologies: ["Python", "FastAPI", "LangGraph", "PostgreSQL"],
+    visual: "fedlens",
+    codeHref: "https://github.com/sujan-reddy-p/fedlens",
+  },
+  {
+    number: "03",
     title: "Convergence",
     purpose: "Built a Python research and paper-trading system that finds specialist Polymarket wallets and scores agreement across markets.",
     outcome: "Processed 463K Polymarket conditions and 5.4M+ historical trades with Python, Pandas, PyArrow, and SQLite; generated 96K wallet/category profiles and isolated 266 strict specialists.",
@@ -63,7 +74,7 @@ const projects: Array<{
     codeHref: "https://github.com/sujan-reddy-p/Convergence",
   },
   {
-    number: "03",
+    number: "04",
     title: "Health analysis platform",
     purpose: "Built a multi-disease prediction platform using Python, TensorFlow, and scikit-learn to analyze patient data.",
     outcome: "Improved prediction accuracy by 25% across 10,000 patient records.",
@@ -74,7 +85,7 @@ const projects: Array<{
     codeHref: "https://github.com/sujan-reddy-p",
   },
   {
-    number: "04",
+    number: "05",
     title: "Semantic Analyzer",
     purpose: "Built an NLP-powered plagiarism analyzer for finding paraphrased content across local documents and web results.",
     outcome: "Won 1st place at Hack-A-League, competing with 200+ participants.",
@@ -105,14 +116,6 @@ const achievements = [
   },
   {
     place: "03",
-    title: "Hackerrupt ’22",
-    detail: "2nd place · national field of 3,000+ participants",
-    project: "Software Analyzer",
-    built: "A software-analysis project developed for a national engineering competition.",
-    signal: "Demonstrates analytical software development under an outcome-driven deadline.",
-  },
-  {
-    place: "04",
     title: "Fantom Code",
     detail: "3rd place · national field of 3,000+ participants",
     project: "Inheritance of digital assets on blockchain",
@@ -306,6 +309,10 @@ function ProjectVisual({ type }: { type: string }) {
     return <HealthAnalysisFlow />;
   }
 
+  if (type === "fedlens") {
+    return <FedLensVisual />;
+  }
+
   if (type === "convergence") {
     return (
       <div className="convergence-ui" aria-hidden="true">
@@ -340,6 +347,17 @@ function HealthAnalysisFlow() {
         <div className="project-flow-node project-flow-node-four"><span><ShieldCheck size={15} /></span><div><small>Output</small><strong>Health profile</strong></div></div>
       </div>
       <div className="project-flow-result"><span>TensorFlow + scikit-learn</span><strong>Multi-disease analysis</strong><small>Structured features → prediction output</small></div>
+    </div>
+  );
+}
+
+function FedLensVisual() {
+  return (
+    <div className="fedlens-ui" aria-hidden="true">
+      <div className="fedlens-brand"><span className="fedlens-mark"><i /><b /></span><strong>fedlens</strong><small>public spending, in focus</small></div>
+      <div className="fedlens-query"><span>Ask about federal spending</span><strong>How much did NASA spend in FY2025?</strong><i><ArrowUpRight size={13} /></i></div>
+      <div className="fedlens-answer"><span><Check size={12} /> grounded answer</span><strong>$24.9B</strong><small>NASA · FY2025 obligations · USAspending.gov</small></div>
+      <div className="fedlens-footer"><span>LangGraph</span><span>FastAPI</span><span>Neon</span><i /></div>
     </div>
   );
 }
