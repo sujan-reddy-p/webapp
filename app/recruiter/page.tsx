@@ -355,8 +355,8 @@ function FedLensVisual() {
   return (
     <div className="fedlens-ui" aria-hidden="true">
       <div className="fedlens-brand"><span className="fedlens-mark"><i /><b /></span><strong>fedlens</strong><small>public spending, in focus</small></div>
-      <div className="fedlens-query"><span>Ask a nuanced question</span><strong>Why did the Department of Defense budget rise 10×?</strong><i><ArrowUpRight size={13} /></i></div>
-      <div className="fedlens-answer"><span><Check size={12} /> grounded answer</span><strong>Context found</strong><small>budget series · agency publications · source trail</small></div>
+      <div className="fedlens-query"><span>Ask a nuanced question</span><strong>Why did DOD spending rise 10×?</strong><i><ArrowUpRight size={13} /></i></div>
+      <div className="fedlens-answer"><span><Check size={12} /> agent synthesis</span><strong>Sourced brief generated</strong><div className="fedlens-answer-lines"><small>retrieved · fiscal series</small><small>matched · agency publications</small><small>returned · plain-language explanation</small></div></div>
       <div className="fedlens-footer"><span>LangGraph</span><span>FastAPI</span><span>Neon</span><i /></div>
     </div>
   );
