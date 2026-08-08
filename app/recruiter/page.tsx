@@ -77,7 +77,7 @@ const projects: Array<{
     number: "04",
     title: "Health analysis platform",
     purpose: "Built a multi-disease prediction platform using Python, TensorFlow, and scikit-learn to analyze patient data.",
-    outcome: "Improved prediction accuracy by 25% across 10,000 patient records.",
+    outcome: "Analyzed demographic, lifestyle, body-composition, and biomarker patterns across 10,000 patient records to surface disease correlations and connected susceptibility pathways.",
     year: "2023 — 2024",
     role: "Software Engineer Assistantship · IBM",
     technologies: ["Python", "TensorFlow", "scikit-learn"],
@@ -141,7 +141,7 @@ const journey = [
     marker: "2024 — 2026",
     title: "Computer science graduate study at SUNY Buffalo",
     copy: "Pursuing an MS in Computer Science while building a more focused body of work in product engineering and applied AI.",
-    location: "San Francisco, CA",
+    location: "Buffalo, NY",
   },
 ];
 

@@ -547,7 +547,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   z-index: 60;
   width: 116px;
   pointer-events: none;
-  transform: scale(.85);
+  transform: scale(.935);
   transform-origin: right center;
 }
 .companion-button {
@@ -866,7 +866,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .project-showcase { min-height: 280px; }.project-live-preview { width:160%; height:160%; transform:scale(.625); }.contact-stage { min-height:460px; }.contact-stage-actions { grid-template-columns:1fr; width:min(100%,390px); margin-top:28px; }.contact-stage-actions a { min-height:76px; }
   .atlas-panel { right: 3%; width: 55%; padding: 19px; }
   .signal-node { min-width: 70px; padding: 0 10px; }
-  .companion { left: 16px !important; top: auto !important; bottom: 18px; transform: scale(.765); transform-origin: left bottom; }
+  .companion { left: 16px !important; top: auto !important; bottom: 18px; transform: scale(.842); transform-origin: left bottom; }
   .companion-popover,
   .companion .companion-popover { left: 0; right: auto; }
   .exploration-layout { display: block; }

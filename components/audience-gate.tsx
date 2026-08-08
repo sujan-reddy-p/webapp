@@ -6,8 +6,8 @@ import { ArrowUpRight, BriefcaseBusiness, Compass } from "lucide-react";
 const paths = [
   {
     eyebrow: "The fast path",
-    title: "I’m a recruiter",
-    copy: "A clear, concise view of what Sujan builds, how he thinks, and where to begin.",
+    title: "My professional life with code",
+    copy: "The products, systems, and decisions behind the work.",
     href: "/recruiter",
     icon: BriefcaseBusiness,
     className: "bg-[#f4f0e9] text-[#171716]",
@@ -15,8 +15,8 @@ const paths = [
   },
   {
     eyebrow: "The scenic route",
-    title: "I’m here to explore",
-    copy: "Step into a more visual collection of experiments, ideas, and work in progress.",
+    title: "My life beyond code",
+    copy: "The places, curiosities, and small details that shape how I build.",
     href: "/explore",
     icon: Compass,
     className: "bg-[#17191f] text-[#f5f1ea]",

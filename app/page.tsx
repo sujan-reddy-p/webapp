@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
+import RecruiterPage from "@/app/recruiter/page";
 
 export default function Home() {
-  // Keep the audience chooser available for a future visitor launch.
-  // The public entry point is recruiter-ready for now.
-  redirect("/recruiter");
+  return <RecruiterPage />;
 }
