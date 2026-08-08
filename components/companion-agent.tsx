@@ -207,7 +207,7 @@ export function CompanionAgent() {
             {open && <button type="button" onClick={() => setOpen(false)} aria-label="Close agent preview"><X size={12} /></button>}
             <span className="section-kicker">{atPageEnd && !open ? "One last thing" : localLoreMode ? "Local Lore · field note" : "Sujan’s agent"}</span>
             <p>{atPageEnd && !open ? endNotes[noteIndex] : localLoreMode ? localLoreNotes[localLoreNoteIndex] : agentMessages[agentMessageIndex] ?? agentMessages[0]}</p>
-            {atPageEnd && !open ? <div className="companion-end-actions"><a href="mailto:sujanreddy.rp@gmail.com"><Mail size={13} /><span>Email</span></a><a href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer"><Linkedin size={13} /><span>DM on LinkedIn</span></a></div> : localLoreMode ? <span className="companion-coming">Reading the map · checking the good bits</span> : null}
+            {atPageEnd && !open ? <div className="companion-end-actions"><a href="mailto:sujanreddy.rp@gmail.com"><Mail size={13} /><span>Email</span></a><a href="https://www.linkedin.com/in/sujan-reddy-p/" target="_blank" rel="noreferrer"><Linkedin size={13} /><span>DM on LinkedIn</span></a></div> : localLoreMode ? <span className="companion-coming">Reading the map · checking the good bits</span> : <span className="companion-coming">Tokens on cooldown · check back tomorrow</span>}
           </motion.div>
         )}
       </AnimatePresence>
