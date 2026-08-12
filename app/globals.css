@@ -142,7 +142,10 @@ a, button { -webkit-tap-highlight-color: transparent; }
   color: var(--site-text);
   background: var(--panel-raised);
 }
-.theme-toggle-attention { width:auto !important; min-width:40px; padding:0 13px; gap:8px; animation:theme-toggle-attention 1.8s ease-in-out 2; }.theme-toggle-hint { white-space:nowrap; color:var(--site-text); font:10px var(--font-geist-mono); letter-spacing:.08em; text-transform:uppercase; animation:theme-toggle-hint 4.2s ease forwards; } @keyframes theme-toggle-attention { 0%,100% { transform:translateY(0); } 18% { transform:translateY(-2px); } 35% { transform:translateY(0); } 52% { transform:translateY(-1px); } } @keyframes theme-toggle-hint { 0%,65% { max-width:100px; opacity:1; } 100% { max-width:0; opacity:0; overflow:hidden; } }
+.theme-toggle-attention { width:40px !important; min-width:40px; padding:0; gap:0; animation:theme-toggle-attention 1.8s ease-in-out 2; }
+.theme-toggle-hint { position:absolute; right:calc(100% + 8px); white-space:nowrap; color:var(--site-text); font:10px var(--font-geist-mono); letter-spacing:.08em; text-transform:uppercase; animation:theme-toggle-hint 4.2s ease forwards; }
+@keyframes theme-toggle-attention { 0%,100% { transform:translateY(0); } 18% { transform:translateY(-2px); } 35% { transform:translateY(0); } 52% { transform:translateY(-1px); } }
+@keyframes theme-toggle-hint { 0%,65% { opacity:1; } 100% { opacity:0; visibility:hidden; } }
 
 .profile-control-link[aria-current="page"] {
   color: var(--accent-contrast);
