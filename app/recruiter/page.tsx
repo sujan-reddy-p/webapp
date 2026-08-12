@@ -18,6 +18,7 @@ import type { IconType } from "react-icons";
 import { CompanionAgent } from "@/components/companion-agent";
 import { LocalLoreHeroCard } from "@/components/local-lore-hero-card";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ContactLinks } from "@/components/contact-links";
 import { profile } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -172,6 +173,7 @@ export default function RecruiterPage() {
         </div>
       </nav>
       <ThemeToggle />
+      <ContactLinks />
       <CompanionAgent />
 
       <div className="relative mx-auto max-w-[1320px] px-6 pb-16 pt-28 md:px-10 md:pb-24 md:pt-36">
